@@ -5,9 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <getopt.h>
-#include "vigenere.h"
 
-char *read_full_file(const char *filename);
+#include "vigenere.h"
+#include "util.h"
+
 void usage();
 
 int main(int argc, char **argv)
@@ -15,7 +16,6 @@ int main(int argc, char **argv)
 
 	int option = 0;
 	const char *outfilename = NULL;
-
 
 	opterr = 0;
 	while ( (option = getopt(argc, argv, "edo:")) != -1 )
@@ -51,10 +51,16 @@ int main(int argc, char **argv)
 		printf("Key must be provided\n");
 		return 2;
 	}
-	const char *plaintext = read_full_file(argv[optind]);
+	char *plaintext = read_full_file(argv[optind]);
+	if (plaintext == NULL)
+	{
+		printf("Could not read file \"%s\".\n", argv[optind]);
+		return 3;
+	}
 	const char *key = argv[optind + 1];
 
-	const char *ciphertext = vigenere_encrypt(plaintext, key);
+	char *ciphertext = vigenere_encrypt(plaintext, key);
+
 	if (outfilename == NULL)
 	{
 		printf("%s", ciphertext);
@@ -65,19 +71,11 @@ int main(int argc, char **argv)
 		fprintf(out, "%s", ciphertext);
 		fclose(out);
 	}
-	return 0;
-}
 
-char *read_full_file(const char *filename)
-{
-	FILE *file = fopen(filename, "r");
-	fseek(file, 0, SEEK_END);
-	size_t len = ftell(file);
-	rewind(file);
-	char *content = (char*)malloc(len + 1);
-	fread(content, len, 1, file);
-	fclose(file);
-	return content;
+	free(plaintext);
+	free (ciphertext);
+
+	return 0;
 }
 
 void usage()
