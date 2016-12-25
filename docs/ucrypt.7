@@ -3,8 +3,10 @@
 ucrypt \- toy cryptography utilities
 .SH SYNOPSIS
 .B ucrypt
-\fIinput_file\fR
 [\fB\-o\fR \fIoutput_file\fR]
+[\fB-e\fR|\fB-d\fR]
+\fIinfile\fR
+\fIkey\fR
 .SH DESCRIPTION
 .B ucrypt
 provides several utilities for toy/puzzle cryptography. At present, the only
@@ -12,4 +14,10 @@ available functionality is the Vigenere cipher.
 .SH OPTIONS
 .TP
 .BR \-o " " \fIoutput_file\fR
-outputs the ciphertext to output_file instead of stdout
+Outputs the ciphertext to output_file instead of stdout.
+.TP
+.BR \-e \fR
+Encrypt the given file. Incompatible with -d.
+.TP
+.BR \-d \fR
+Decrypt the given file. Incompatible with -e.
