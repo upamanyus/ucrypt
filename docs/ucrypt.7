@@ -3,6 +3,7 @@
 ucrypt \- toy cryptography utilities
 .SH SYNOPSIS
 .B ucrypt
+[\fB\-\-cipher\fR {\fIcaesar\fR|\fIvigenere\fR}]
 [\fB\-o\fR \fIoutput_file\fR]
 [\fB-e\fR|\fB-d\fR]
 \fIinfile\fR
@@ -10,7 +11,9 @@ ucrypt \- toy cryptography utilities
 .SH DESCRIPTION
 .B ucrypt
 provides several utilities for toy/puzzle cryptography. At present, the only
-available functionality is the Vigenere cipher.
+available functionality is the Caesar and Vigenere cipher. If no cipher is
+specified as input, the default is the Caesar cipher. If no action (i.e. encrypt
+or decrypt) is specified, the default is to encrypt.
 .SH OPTIONS
 .TP
 .BR \-o " " \fIoutput_file\fR
@@ -21,3 +24,8 @@ Encrypt the given file. Incompatible with -d.
 .TP
 .BR \-d \fR
 Decrypt the given file. Incompatible with -e.
+.TP
+.BR \-c " " \-\-cipher={\fIcaesar\fR|\fIvigenere\fB}
+Specifies the cipher to use for encrypting and decrypting. If the Caesar cipher
+is used, the key must be an integer. If the Vigenere cipher is used, the key
+must be a string consisting only of alpha characters.

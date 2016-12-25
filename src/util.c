@@ -106,6 +106,11 @@ get_operation(int argc, char **argv)
 		}
 	}
 
+	if (operation.operationtype == NOTHING)
+	{
+		operation.operationtype = ENCRYPT;
+	}
+
 	if (optind >= argc)
 	{
 		printf("Input file must be provided\n");
