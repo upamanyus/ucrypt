@@ -2,6 +2,7 @@
 #include "vigenere.h"
 #include "caesar.h"
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -45,12 +46,28 @@ get_operation(int argc, char **argv)
 	operation.ciphertype = CAESAR;
 
 	opterr = 0;
-	while ( (option = getopt(argc, argv, "edo:")) != -1 )
+	int long_option_index = 0;
+
+	static struct option long_options[] =
+	{
+		{"cipher", required_argument, 0, 'c'},
+	};
+	while ( (option = getopt_long(argc, argv, "edo:c:", long_options, &long_option_index)) != -1 )
 	{
 		switch (option)
 		{
 			case 'o':
 				operation.outfilename = optarg;
+				break;
+			case 'c':
+				if (strcmp(optarg, "vigenere") == 0)
+				{
+					operation.ciphertype = VIGENERE;
+				}
+				else if (strcmp(optarg, "caesar") == 0)
+				{
+					operation.ciphertype = CAESAR;
+				}
 				break;
 			case 'e':
 				if (operation.operationtype == NOTHING)
@@ -77,7 +94,12 @@ get_operation(int argc, char **argv)
 				{
 					printf("Option -%c requires argument.\n", optopt);
 				}
+				else if (optopt == 'c')
+				{
+					printf("Please provide cipher name.\n");
+				}
 				operation.is_valid = false;
+				break;
 			default:
 				printf("Option -%c unrecognized.\n", option);
 				operation.is_valid = false;
@@ -200,7 +222,7 @@ int run_operation_caesar(const struct operation_t *operation)
 		int caesar_key = strtol(operation->key, &endptr, 10);
 		if (endptr == operation->key)
 		{
-			printf("Invalid number entered for key");
+			printf("Invalid number entered for key\n");
 			return 1;
 		}
 
@@ -240,7 +262,7 @@ int run_operation_caesar(const struct operation_t *operation)
 		int caesar_key = strtol(operation->key, &endptr, 10);
 		if (endptr == operation->key)
 		{
-			printf("Invalid number entered for key");
+			printf("Invalid number entered for key\n");
 			return 1;
 		}
 		char *plaintext = caesar_decrypt(ciphertext, caesar_key);

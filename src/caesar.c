@@ -59,7 +59,7 @@ caesar_decrypt(const char *ciphertext, int key)
 	{
 		if (isalpha(*ciphertext))
 		{
-			*plaintext = caesar_encrypt_char(tolower(*ciphertext), key);
+			*plaintext = caesar_decrypt_char(tolower(*ciphertext), key);
 			if (isupper(*ciphertext))
 			{
 				*plaintext = toupper(*plaintext);
