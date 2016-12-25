@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <getopt.h>
 #include "vigenere.h"
 
 char *read_full_file(const char *filename);
@@ -16,9 +16,9 @@ int main(int argc, char **argv)
 	int option = 0;
 	const char *outfilename = NULL;
 
-	opterr = 0;
 
-	while ( (option = getopt(argc, argv, "o:")) != -1 )
+	opterr = 0;
+	while ( (option = getopt(argc, argv, "edo:")) != -1 )
 	{
 		switch (option)
 		{
@@ -82,5 +82,5 @@ char *read_full_file(const char *filename)
 
 void usage()
 {
-	printf("Usage: ucrypt input_file [-o output_file] key\n");
+	printf("Usage: ucrypt [-o output_file] input_file key\n");
 }
