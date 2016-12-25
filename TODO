@@ -1,6 +1,9 @@
-Fix ucrypt.c
+Update documentation.
 
 Caesar Cipher
+
+Clean up the code. There is a lot of repetitive code in util.c that is screaming
+to be abstracted away.
 
 TESTS
   Unit

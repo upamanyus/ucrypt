@@ -12,7 +12,7 @@
 char *vigenere_encrypt(const char *plaintext, const char *key)
 {
 	size_t plaintext_size = strlen(plaintext);
-	char *ciphertext = (char*)malloc(plaintext_size);
+	char *ciphertext = (char*)malloc(plaintext_size + 1);
 	
 	char *ciphertext_start = ciphertext;
 	const char *key_start = key;
@@ -48,7 +48,7 @@ char *vigenere_encrypt(const char *plaintext, const char *key)
 char *vigenere_decrypt(const char *ciphertext, const char *key)
 {
 	size_t ciphertext_size = strlen(ciphertext);
-	char *plaintext = (char*)malloc(ciphertext_size);
+	char *plaintext = (char*)malloc(ciphertext_size + 1);
 
 	char *plaintext_start = plaintext;
 	const char *key_start = key;

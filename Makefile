@@ -1,5 +1,5 @@
 NAME=ucrypt
-CFLAGS=-Wall -pedantic -Werror -std=c11
+CFLAGS=-Wall -pedantic -Werror -std=c11 -g
 LDFLAGS=
 
 INCLUDE_DIR=./include
