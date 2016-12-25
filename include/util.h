@@ -1,3 +1,5 @@
+// Copyright (c) 2016 Upamanyu Sharma
+
 #ifndef _UTIL_H_
 #define _UTIL_H_
 #include <stdbool.h>
@@ -9,6 +11,7 @@ char *read_full_file(const char *filename);
 
 enum ciphertype_t {
 	VIGENERE,
+	CAESAR,
 };
 
 enum operationtype_t {

@@ -1,5 +1,6 @@
 #include "util.h"
 #include "vigenere.h"
+#include "caesar.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@ get_operation(int argc, char **argv)
 	operation.infilename = NULL;
 	operation.is_valid = true;
 	operation.operationtype = NOTHING;
+	operation.ciphertype = CAESAR;
 
 	opterr = 0;
 	while ( (option = getopt(argc, argv, "edo:")) != -1 )
@@ -101,6 +103,7 @@ get_operation(int argc, char **argv)
 }
 
 static int run_operation_vigenere(const struct operation_t *operation);
+static int run_operation_caesar(const struct operation_t *operation);
 
 int
 run_operation(struct operation_t *operation)
@@ -108,6 +111,10 @@ run_operation(struct operation_t *operation)
 	if (operation->ciphertype == VIGENERE)
 	{
 		return run_operation_vigenere(operation);
+	}
+	else if (operation->ciphertype == CAESAR)
+	{
+		return run_operation_caesar(operation);
 	}
 	return 0;
 }
@@ -165,6 +172,89 @@ int run_operation_vigenere(const struct operation_t *operation)
 			else
 			{
 				return 1;
+			}
+			fclose(outfile);
+		}
+		else
+		{
+			printf("%s", plaintext);
+		}
+		free(ciphertext);
+		free(plaintext);
+	}
+
+	return 0;
+}
+
+int run_operation_caesar(const struct operation_t *operation)
+{
+	if (operation->operationtype == ENCRYPT)
+	{
+		char *plaintext = read_full_file(operation->infilename);
+		if (plaintext == NULL)
+		{
+			printf("Unable to open input file \"%s\"\n", operation->infilename);
+			return 1;
+		}
+		char *endptr;
+		int caesar_key = strtol(operation->key, &endptr, 10);
+		if (endptr == operation->key)
+		{
+			printf("Invalid number entered for key");
+			return 1;
+		}
+
+		char *ciphertext = caesar_encrypt(plaintext, caesar_key);
+
+		if (operation->outfilename != NULL)
+		{
+			FILE *outfile = fopen(operation->outfilename, "w");
+			if (outfile != NULL)
+			{
+				fprintf(outfile, "%s", ciphertext);
+			}
+			else
+			{
+				return 1;
+			}
+			fclose(outfile);
+		}
+		else
+		{
+			printf("%s", ciphertext);
+		}
+
+		free(plaintext);
+		free(ciphertext);
+	}
+	else if (operation->operationtype == DECRYPT)
+	{
+		char *ciphertext = read_full_file(operation->infilename);
+		if (ciphertext == NULL)
+		{
+			printf("Unable to open input file \"%s\"\n", operation->infilename);
+			return 1;
+		}
+
+		char *endptr;
+		int caesar_key = strtol(operation->key, &endptr, 10);
+		if (endptr == operation->key)
+		{
+			printf("Invalid number entered for key");
+			return 1;
+		}
+		char *plaintext = caesar_decrypt(ciphertext, caesar_key);
+
+		if (operation->outfilename != NULL)
+		{
+			FILE *outfile = fopen(operation->outfilename, "w");
+			if (outfile != NULL)
+			{
+				fprintf(outfile, "%s", plaintext);
+			}
+			else
+			{
+				return 2;
 			}
 			fclose(outfile);
 		}

@@ -1,4 +1,4 @@
-Caesar Cipher
+Add options for selecting the cipher type
 
 Clean up the code. There is a lot of repetitive code in util.c that is screaming
 to be abstracted away.

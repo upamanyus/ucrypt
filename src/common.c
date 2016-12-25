@@ -1,3 +1,5 @@
+// Copyright (c) 2016 Upamanyu Sharma
+
 #include "common.h"
 
 // Returns a positive integer less than n that is congruent ot k (mod n).
