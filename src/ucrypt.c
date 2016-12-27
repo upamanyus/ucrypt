@@ -27,5 +27,5 @@ int main(int argc, char **argv)
 
 void usage()
 {
-	printf("Usage: ucrypt [-ed] [-o output_file] input_file key\n");
+	printf("Usage: ucrypt [--cipher caesar|vigenere] [-ed] [-o output_file] input_file key\n");
 }

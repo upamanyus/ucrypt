@@ -1,6 +1,6 @@
 NAME=ucrypt
 CFLAGS=-Wall -pedantic -Werror -std=c11 -g
-LDFLAGS=
+LDFLAGS=-lncurses
 
 INCLUDE_DIR=./include
 SRC_DIR=./src

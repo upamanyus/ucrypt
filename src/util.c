@@ -1,6 +1,7 @@
 #include "util.h"
 #include "vigenere.h"
 #include "caesar.h"
+#include "interactive.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -51,11 +52,14 @@ get_operation(int argc, char **argv)
 	static struct option long_options[] =
 	{
 		{"cipher", required_argument, 0, 'c'},
+		{"interactive", no_argument, 0, 'i'},
 	};
-	while ( (option = getopt_long(argc, argv, "edo:c:", long_options, &long_option_index)) != -1 )
+	while ( (option = getopt_long(argc, argv, "iedo:c:", long_options, &long_option_index)) != -1 )
 	{
 		switch (option)
 		{
+			case 'i':
+				operation.operationtype = INTERACTIVE;
 			case 'o':
 				operation.outfilename = optarg;
 				break;
@@ -106,6 +110,11 @@ get_operation(int argc, char **argv)
 		}
 	}
 
+	if (operation.operationtype == INTERACTIVE)
+	{
+		return operation;
+	}
+
 	if (operation.operationtype == NOTHING)
 	{
 		operation.operationtype = ENCRYPT;
@@ -135,7 +144,11 @@ static int run_operation_caesar(const struct operation_t *operation);
 int
 run_operation(struct operation_t *operation)
 {
-	if (operation->ciphertype == VIGENERE)
+	if (operation->operationtype == INTERACTIVE)
+	{
+		return run_interactive();
+	}
+	else if (operation->ciphertype == VIGENERE)
 	{
 		return run_operation_vigenere(operation);
 	}

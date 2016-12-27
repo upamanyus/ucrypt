@@ -18,6 +18,7 @@ enum operationtype_t {
 	NOTHING,
 	ENCRYPT,
 	DECRYPT,
+	INTERACTIVE,
 };
 
 struct operation_t {
