@@ -1,11 +1,7 @@
-Clean up the code. There is a lot of repetitive code in util.c that is screaming
-to be abstracted away.
-
-TESTS
-  Unit
-  Integration
-
-Ncurses interface
+Clean up the interactive mode framework. Perhaps a finite state machine is the
+way to go. The trouble with the current setup is the need to pass around
+window_t*s. Menus should really just change the state of the program, possibly
+in a such a way that another menu runs.
 
 Cryptanalysis
 
