@@ -15,11 +15,26 @@ create_window(int x, int y, int w, int h)
 	return window;
 }
 
+struct window_t*
+create_full_window()
+{
+	int w;
+	int h;
+	getmaxyx(stdscr, h, w);
+	return create_window(0, 0, w, h);
+}
+
 void
 delete_window(struct window_t *window)
 {
 	delwin(window->win);
 	free(window);
+}
+
+void
+update_window(struct window_t *window)
+{
+	wrefresh(window->win);
 }
 
 void

@@ -1,3 +1,5 @@
+// Copyright (c) 2016 Upamanyu Sharma
+
 #ifndef _WINDOW_H_
 #define _WINDOW_H_
 
@@ -24,6 +26,10 @@ struct window_t
 struct window_t*
 create_window(int x, int y, int w, int h);
 
+// Creates a window with maximal dimensions
+struct window_t*
+create_full_window();
+
 // Frees up the window
 // <> (window): A valid window_t; after this function, the window should not be
 //     used because it will be invalidated.
@@ -37,8 +43,10 @@ delete_window(struct window_t *window);
 void
 print_centered(struct window_t *window, const char *str, int y);
 
+// Draws the window to the screen
+// -> (window): The window to draw to the screen
 void
-update_window();
+update_window(struct window_t *window);
 
 // Prints the given string centered on the window, with highlight
 // -> (window): The window to print to
@@ -46,5 +54,11 @@ update_window();
 // -> (y): The height to print at
 void
 print_centered_highlighted(struct window_t *window, const char *str, int y);
+
+// This initializes ncurses colors for menu use.
+// <- (return): Returns zero when the colors were successfully initialized,
+//     nonzero otherwise.
+int
+initialize_colors(void);
 
 #endif // _WINDOW_H_

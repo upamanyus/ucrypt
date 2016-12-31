@@ -32,7 +32,7 @@ draw_menu_with_focus(struct window_t *window, const struct menu_t *menu, int foc
 	}
 }
 
-void
+int
 run_menu(struct window_t *window, const struct menu_t *menu)
 {
 	int focused_option = 0;
@@ -61,11 +61,12 @@ run_menu(struct window_t *window, const struct menu_t *menu)
 		}
 		else if (ch == KEY_ENTER || ch == 10 || ch == 13)
 		{
-			menu->options[focused_option].action();
+			return focused_option;
 		}
 		else if(ch == 'q' || ch == 'Q')
 		{
 			quit = true;
 		}
 	}
+	return -1;
 }

@@ -1,7 +1,8 @@
-Clean up the interactive mode framework. Perhaps a finite state machine is the
-way to go. The trouble with the current setup is the need to pass around
-window_t*s. Menus should really just change the state of the program, possibly
-in a such a way that another menu runs.
+Make the encrypt/decrypt part of the interactive menu. Maybe also make the menu
+look a bit nicer.
+
+Add configurable building so the program can be built with/without ncurses
+support.
 
 Cryptanalysis
 
